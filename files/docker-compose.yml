@@ -9,5 +9,17 @@ services:
       - "30303"
     volumes:                                                                 
       - /mnt/data/geth_mainnet:/root/.ethereum/
-    command: "--syncmode 'snap' --http --http.api eth,net,web3 --http.corsdomain '*' --http.addr 0.0.0.0 --ws --ws.api eth,net,web3 --ws.origins '*' --ws.addr 0.0.0.0"
+    command: 
+      --syncmode 'snap'
+      --http
+      --http.api eth,net,web3
+      --http.corsdomain '*'
+      --http.addr 0.0.0.0
+      --http.port 8545
+      --http.vhosts '*'
+      --ws
+      --ws.api eth,net,web3
+      --ws.origins '*'
+      --ws.addr 0.0.0.0
+      --ws.port 8546
  
