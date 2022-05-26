@@ -4,7 +4,7 @@
   register: docker_check
   ignore_errors: yes
 - name: Docker Compose - Check if docker-compose is installed
-  command: docker-compose --version
+  command: docker compose version
   register: docker_compose_check
   ignore_errors: yes
 - name: Create directories for Go-Ethereum
@@ -28,7 +28,7 @@
     - name: Start node
       command:
         cmd: >
-          docker-compose -f /var/www/geth/docker-compose.yml up -d
+          docker compose -f /var/www/geth/docker-compose.yml up -d
   when: 
   - docker_check.stderr.find('service could not be found') == -1
   - docker_compose_check.msg.find('No such file or directory') == -1
