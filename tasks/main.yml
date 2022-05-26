@@ -1,6 +1,6 @@
 ---
 - name: Docker - Check if docker is installed
-  command: systemctl status docker
+  command: docker version
   register: docker_check
   ignore_errors: yes
 - name: Docker Compose - Check if docker-compose is installed
@@ -30,5 +30,5 @@
         cmd: >
           docker compose -f /var/www/geth/docker-compose.yml up -d
   when: 
-  - docker_check.stderr.find('service could not be found') == -1
-  - docker_compose_check.msg.find('No such file or directory') == -1
+  - not docker_check.failed
+  - not docker_compose_check.failed
