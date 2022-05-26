@@ -1,0 +1,10 @@
+galaxy_info:
+  author: ephdtrg
+  description: Ansible role to setup Go-Ethereum node on cloud instances via Docker
+  company: Rock'n'Block
+  license: MIT
+
+  min_ansible_version: 2.1
+
+  galaxy_tags: []
+dependencies: []

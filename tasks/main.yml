@@ -1,0 +1,34 @@
+---
+- name: Docker - Check if docker is installed
+  command: systemctl status docker
+  register: docker_check
+  ignore_errors: yes
+- name: Docker Compose - Check if docker-compose is installed
+  command: docker-compose --version
+  register: docker_compose_check
+  ignore_errors: yes
+- name: Create directories for Go-Ethereum
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_list:
+    - /var/www/geth
+    - /mnt/data/geth_mainnet
+- name: Place docker-compose.yml with Geth configuration
+  copy:
+    src: files/docker-compose.yml
+    dest: /var/www/geth
+- name: Run Geth node
+  block:
+    - name: Docker - Start the daemon
+      systemd:
+        name: docker
+        state: started
+        masked: no
+    - name: Start node
+      command:
+        cmd: >
+          docker-compose -f /var/www/geth/docker-compose.yml up -d
+  when: 
+  - docker_check.stderr.find('service could not be found') == -1
+  - docker_compose_check.msg.find('No such file or directory') == -1

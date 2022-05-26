@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  geth:
+    image: ethereum/client-go:stable
+    restart: unless-stopped
+    expose:
+      - "8545"
+      - "8546"
+      - "30303"
+    volumes:                                                                 
+      - /mnt/data/geth_mainnet:/root/.ethereum/
+    command: "--syncmode 'snap' --http --http.api eth,net,web3 --http.corsdomain '*' --http.addr 0.0.0.0 --ws --ws.api eth,net,web3 --ws.origins '*' --ws.addr 0.0.0.0"
+ 
