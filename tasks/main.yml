@@ -12,23 +12,34 @@
     path: "{{ item }}"
     state: directory
   with_list:
-    - /var/www/geth
-    - /mnt/data/geth_mainnet
+    - /var/www/bsc_geth
+    - /mnt/data/bsc_mainnet
 - name: Place docker-compose.yml with Geth configuration
   copy:
-    src: files/docker-compose.yml
+    src: files/{{ item }}
     dest: /var/www/geth
-- name: Run Geth node
-  block:
-    - name: Docker - Start the daemon
-      systemd:
-        name: docker
-        state: started
-        masked: no
-    - name: Start node
-      command:
-        cmd: >
-          docker compose -f /var/www/geth/docker-compose.yml up -d
-  when: 
-  - not docker_check.failed
-  - not docker_compose_check.failed
+    with_list:
+    - docker-compose.yml
+    - config.toml
+    - genesis.json
+- name: Place .env file with BSC node version
+  copy:
+    dest: /var/www/bsc_geth/.env
+    content: |
+      BSC_NODE_VERSION={{ bsc_node_version }}
+
+
+# - name: Run Geth node
+#   block:
+#     - name: Docker - Start the daemon
+#       systemd:
+#         name: docker
+#         state: started
+#         masked: no
+#     - name: Start node
+#       command:
+#         cmd: >
+#           docker compose -f /var/www/geth/docker-compose.yml up -d
+#   when: 
+#   - not docker_check.failed
+#   - not docker_compose_check.failed
