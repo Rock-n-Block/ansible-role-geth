@@ -16,12 +16,12 @@
     - /mnt/data/bsc_mainnet
 - name: Place docker-compose.yml with Geth configuration
   copy:
-    src: files/{{ item }}
+    src: "files/{{ item }}"
     dest: /var/www/geth
-    with_list:
-    - docker-compose.yml
-    - config.toml
-    - genesis.json
+  with_list:
+  - docker-compose.yml
+  - config.toml
+  - genesis.json
 - name: Place .env file with BSC node version
   copy:
     dest: /var/www/bsc_geth/.env
