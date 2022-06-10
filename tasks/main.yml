@@ -17,7 +17,7 @@
 - name: Place docker-compose.yml with Geth configuration
   copy:
     src: "files/{{ item }}"
-    dest: /var/www/geth
+    dest: /var/www/bsc_geth/{{ item }}
   with_list:
   - docker-compose.yml
   - config.toml
