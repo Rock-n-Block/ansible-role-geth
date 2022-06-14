@@ -11,7 +11,7 @@ services:
       - /mnt/data/bsc_mainnet:/root/.bsc_mainnet
       - /var/www/bsc_geth/config.toml:/root/config.toml
       - /var/www/bsc_geth/genesis.json:/root/genesis.json
-    command: geth
+    command:
       --config /root/config.toml
       --datadir /root/.bsc_mainnet
       --diffsync
