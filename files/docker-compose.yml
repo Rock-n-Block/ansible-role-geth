@@ -3,10 +3,10 @@ services:
   geth:
     image: ghcr.io/rock-n-block/bsc-dockerized:${BSC_NODE_VERSION}
     restart: unless-stopped
-    expose:
-      - "8545"
-      - "8546"
-      - "30303"
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+      - "30311:30311"
     volumes:                                                                 
       - /mnt/data/bsc_mainnet:/root/.bsc_mainnet
       - /var/www/bsc_geth/config.toml:/root/config.toml
